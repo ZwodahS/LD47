@@ -21,11 +21,18 @@ class MenuScreen extends common.Screen {
             b.text = HU.font('New Game', 0xFFFFFF);
         }
         b.x = AU.center(0, Globals.gameWidth, ButtonWidth);
-        b.y = 200;
+        b.y = 250;
         this.addChild(b);
         b.onClick = function() {
             this.game.switchScreen(new BasicScreen());
         }
+
+        var font = Assets.fontMontserrat32.toFont();
+        var text = new h2d.Text(font);
+        text.text = 'LOOP INVADERS';
+        text.x = AU.center(0, Globals.gameWidth, text.textWidth);
+        text.y = 180;
+        this.addChild(text);
     }
 
     override public function update(dt: Float) {}
