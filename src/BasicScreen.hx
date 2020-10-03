@@ -156,7 +156,13 @@ class BasicScreen extends common.Screen {
     }
 
     function damage(e: Entity) {
+        if (e.invincibleDelay > 0) return;
         e.hp -= 1;
+        if (e.hp <= 0) return;
+        if (e == this.player) {
+            e.invincibleDelay = 2.0;
+            this.animator.runAnim(new Blink(new WrappedObject(e), 2, .1));
+        } else {}
     }
 
     function explode(e: Entity) {
@@ -267,6 +273,7 @@ class BasicScreen extends common.Screen {
         entity.size = 16;
         entity.side = 0;
         entity.weapon = new Weapon(1, .1, .1, 300);
+        entity.hp = 5;
         return entity;
     }
 

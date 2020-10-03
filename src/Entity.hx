@@ -24,6 +24,7 @@ class Entity extends h2d.Object {
     public var size: Float;
     public var side: Int;
     public var isActive: Bool;
+    public var invincibleDelay: Float;
 
     public function new(parent: h2d.Object, center: Point2f, radius: Float) {
         super(parent);
@@ -91,6 +92,7 @@ class Entity extends h2d.Object {
     public function update(dt: Float) {
         if (this.weapon != null) this.weapon.update(dt);
         if (this.ai != null) this.ai.update(dt, this);
+        if (this.invincibleDelay > 0) this.invincibleDelay -= dt;
     }
 
     public function delete() {
