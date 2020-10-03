@@ -155,6 +155,50 @@
       "duration": 100
     },
     {
+      "filename": "heart_filled0",
+      "frame": {
+        "x": 512,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 1024,
+        "h": 1024
+      },
+      "duration": 100
+    },
+    {
+      "filename": "heart_empty0",
+      "frame": {
+        "x": 544,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 1024,
+        "h": 1024
+      },
+      "duration": 100
+    },
+    {
       "filename": "button_default0",
       "frame": {
         "x": 0,
@@ -251,15 +295,27 @@
         "direction": "forward"
       },
       {
-        "name": "button_default",
+        "name": "heart_filled",
         "from": 7,
         "to": 7,
         "direction": "forward"
       },
       {
-        "name": "button_hover",
+        "name": "heart_empty",
         "from": 8,
         "to": 8,
+        "direction": "forward"
+      },
+      {
+        "name": "button_default",
+        "from": 9,
+        "to": 9,
+        "direction": "forward"
+      },
+      {
+        "name": "button_hover",
+        "from": 10,
+        "to": 10,
         "direction": "forward"
       }
     ]

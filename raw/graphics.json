@@ -126,7 +126,7 @@
     "duration": 100
    },
    {
-    "filename": "14",
+    "filename": "heart_filled0",
     "frame": { "x": 448, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -135,7 +135,7 @@
     "duration": 100
    },
    {
-    "filename": "15",
+    "filename": "heart_empty0",
     "frame": { "x": 480, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -185,7 +185,9 @@
    { "name": "enemy_bomb", "from": 3, "to": 3, "direction": "forward" },
    { "name": "enemy_machinegun", "from": 4, "to": 4, "direction": "forward" },
    { "name": "bullet", "from": 8, "to": 8, "direction": "forward" },
-   { "name": "tile", "from": 9, "to": 9, "direction": "forward" }
+   { "name": "tile", "from": 9, "to": 9, "direction": "forward" },
+   { "name": "heart_filled", "from": 14, "to": 14, "direction": "forward" },
+   { "name": "heart_empty", "from": 15, "to": 15, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }

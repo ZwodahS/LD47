@@ -28,8 +28,32 @@ class BasicScreen extends common.Screen {
     var enemyLeft: Int = 0;
     var spawnDelay: Float = 0;
     var spawnElapsed: Float = 0;
-    var currentRound: Int = 0;
+    var currentRound(default, set): Int = 0;
+
+    function set_currentRound(i: Int): Int {
+        this.currentRound = i;
+        this.roundLabel.text = 'ROUND ${this.currentRound}';
+        this.roundLabel.x = AU.center(0, Globals.gameWidth, this.roundLabel.textWidth);
+        this.roundLabel.y = Globals.gameHeight / 2 - 40;
+        return this.currentRound;
+    }
+
+    var kills(default, set): Int = 0;
+
+    function set_kills(i: Int): Int {
+        this.kills = i;
+        this.killLabel.text = '${this.kills}';
+        this.killLabel.x = AU.center(0, Globals.gameWidth, this.killLabel.textWidth);
+        this.killLabel.y = Globals.gameHeight / 2 - 90;
+        return this.kills;
+    }
+
     var enemyTable: ProbabilityTable<String>;
+
+    var hearts: Array<Heart>;
+    var roundLabel: h2d.Text;
+    var scoreLabel: h2d.Text;
+    var killLabel: h2d.Text;
 
     public function new() {
         super();
@@ -40,22 +64,56 @@ class BasicScreen extends common.Screen {
             Globals.gameWidth / 2 + 200, Globals.gameHeight / 2 + 200
         ];
 
+        this.addChild(this.roundLabel = new h2d.Text(Assets.buttonFont));
+        this.roundLabel.textColor = 0xAAAAAA;
+        this.roundLabel.alpha = 0.25;
+
+        var font = Assets.fontMontserrat32.toFont().clone();
+        this.addChild(this.killLabel = new h2d.Text(font));
+        this.killLabel.textColor = 0xAAAAAA;
+        this.killLabel.alpha = 0.25;
+
         this.enemies = new List<Entity>();
         this.bullets = new List<Bullet>();
 
         this.animator = new common.animations.Animator();
         this.state = "preparing";
 
+        this.scoreLabel = new h2d.Text(font);
+        this.scoreLabel.y = 150;
+        this.addChild(this.scoreLabel);
+        this.scoreLabel.textColor = 0xFFFFFF;
+        this.scoreLabel.visible = false;
         this.retryButton = makeButton("Retry");
         this.retryButton.onClick = function() {
             startNewGame();
         }
         this.retryButton.visible = false;
+        this.retryButton.x = AU.center(0, Globals.gameWidth, ButtonWidth);
+        this.retryButton.y = 400;
 
         this.enemyTable = new ProbabilityTable<String>();
         this.enemyTable.add(120, "cannon");
         this.enemyTable.add(60, "minishooter");
         this.enemyTable.add(60, "machinegun");
+
+        this.hearts = [];
+        for (i in 0...5) {
+            var h = new Heart();
+            this.hearts.push(h);
+            h.x = ((Globals.gameWidth - 32) / 2) - (32 * 2) + (i * 32);
+            h.y = (Globals.gameHeight - 32) / 2;
+            this.addChild(h);
+        }
+    }
+
+    function setPlayerHealth(h: Int) {
+        for (i in 0...h) {
+            this.hearts[i].active = true;
+        }
+        for (i in h...5) {
+            this.hearts[i].active = false;
+        }
     }
 
     function makeButton(label: String): TileButton {
@@ -70,8 +128,6 @@ class BasicScreen extends common.Screen {
         b.onOut = function() {
             b.text = HU.font(label, 0xFFFFFF);
         }
-        b.x = AU.center(0, Globals.gameWidth, ButtonWidth);
-        b.y = 200;
         this.addChild(b);
         return b;
     }
@@ -146,6 +202,7 @@ class BasicScreen extends common.Screen {
         for (e in this.enemies) {
             if (e.hp <= 0) {
                 e.delete();
+                this.kills += 1;
                 explode(e);
             }
         }
@@ -173,6 +230,9 @@ class BasicScreen extends common.Screen {
     function gameOver() {
         this.state = "gameover";
         this.retryButton.visible = true;
+        this.scoreLabel.visible = true;
+        this.scoreLabel.text = 'Score: ${this.kills}';
+        this.scoreLabel.x = AU.center(0, Globals.gameWidth, this.scoreLabel.textWidth);
     }
 
     function damage(e: Entity) {
@@ -183,6 +243,7 @@ class BasicScreen extends common.Screen {
             e.invincibleDelay = 2.0;
             this.animator.runAnim(new Blink(new WrappedObject(e), 2, .1));
             this.animator.runAnim(new Shake(new WrappedObject(this), 10, .5));
+            this.setPlayerHealth(e.hp);
         } else {}
     }
 
@@ -281,6 +342,7 @@ class BasicScreen extends common.Screen {
         this.enemies = new List<Entity>();
         this.retryButton.visible = false;
         this.startRound(1);
+        this.kills = 0;
 
         this.state = "ready";
     }
