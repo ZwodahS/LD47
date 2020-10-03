@@ -1,6 +1,8 @@
 import hxd.Key;
 
 import common.Point2f;
+import common.animations.WrappedObject;
+import common.animations.Shake;
 
 class BasicScreen extends common.Screen {
     var player: Entity;
@@ -8,6 +10,8 @@ class BasicScreen extends common.Screen {
 
     var enemies: List<Entity>;
     var bullets: List<Bullet>;
+
+    public var animator: common.animations.Animator;
 
     public function new() {
         super();
@@ -22,9 +26,11 @@ class BasicScreen extends common.Screen {
         this.player = entity;
 
         this.player.weapon = new Weapon(1, .1, .1, 200);
+        this.animator = new common.animations.Animator();
     }
 
     override public function update(dt: Float) {
+        this.animator.update(dt);
         movePlayerPosition(dt);
         checkFire(dt);
         var w = hxd.Window.getInstance();
@@ -95,6 +101,7 @@ class BasicScreen extends common.Screen {
             var w = hxd.Window.getInstance();
             if (this.player.canFire) {
                 fire(this.player, [w.mouseX, w.mouseY]);
+                this.animator.runAnim(new Shake(new WrappedObject(this), 10, .1));
             }
         }
     }
