@@ -9,6 +9,15 @@ class Entity extends h2d.Object {
 
     public var position(default, set): Float; // between 0 and 2 PI (without the PI)
 
+    public var canFire(get, never): Bool;
+
+    public function get_canFire(): Bool {
+        if (this.weapon == null) return false;
+        return (this.weapon.fire());
+    }
+
+    public var weapon: Weapon;
+
     public function new(parent: h2d.Object, center: Point2f, radius: Float) {
         super(parent);
         this.center = center;
@@ -70,5 +79,9 @@ class Entity extends h2d.Object {
         this.circle.lineStyle(2, 0xAAAAAA, 0.25);
         this.circle.drawCircle(this.center.x, this.center.y, this.radius);
         this.circle.endFill();
+    }
+
+    public function update(dt: Float) {
+        this.weapon.update(dt);
     }
 }
