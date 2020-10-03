@@ -9,7 +9,7 @@
     "duration": 100
    },
    {
-    "filename": "1",
+    "filename": "enemy0",
     "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -36,7 +36,7 @@
     "duration": 100
    },
    {
-    "filename": "4",
+    "filename": "tile0",
     "frame": { "x": 128, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -135,7 +135,9 @@
   "scale": "1",
   "frameTags": [
    { "name": "player", "from": 0, "to": 0, "direction": "forward" },
-   { "name": "bullet", "from": 3, "to": 3, "direction": "forward" }
+   { "name": "enemy", "from": 1, "to": 1, "direction": "forward" },
+   { "name": "bullet", "from": 3, "to": 3, "direction": "forward" },
+   { "name": "tile", "from": 4, "to": 4, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }

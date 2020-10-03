@@ -7,9 +7,12 @@ class Entity extends h2d.Object {
 
     var circle: h2d.Graphics;
 
+    public var ai: EnemyAI;
+
     public var position(default, set): Float; // between 0 and 2 PI (without the PI)
 
     public var canFire(get, never): Bool;
+    public var hp: Int = 1;
 
     public function get_canFire(): Bool {
         if (this.weapon == null) return false;
@@ -17,6 +20,9 @@ class Entity extends h2d.Object {
     }
 
     public var weapon: Weapon;
+
+    public var size: Float;
+    public var side: Int;
 
     public function new(parent: h2d.Object, center: Point2f, radius: Float) {
         super(parent);
@@ -82,6 +88,12 @@ class Entity extends h2d.Object {
     }
 
     public function update(dt: Float) {
-        this.weapon.update(dt);
+        if (this.weapon != null) this.weapon.update(dt);
+        if (this.ai != null) this.ai.update(dt, this);
+    }
+
+    public function delete() {
+        this.circle.remove();
+        this.remove();
     }
 }

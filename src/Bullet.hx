@@ -5,11 +5,18 @@ class Bullet extends h2d.Object {
     var moveSpeed: Float = 100;
 
     var moveVec: Point2f;
+    public var side: Int; // 0 for player, 1 for enemy
 
-    public function new(moveSpeed: Float) {
+    public function new(moveSpeed: Float, side: Int) {
         super();
         var bm = Assets.packedAssets['bullet'].getBitmap();
-        bm.color.setColor(0xFF00FF00);
+        this.side = side;
+        if (side == 0) {
+            bm.color.setColor(0xFF00FF00);
+        } else {
+            bm.color.setColor(0xFFFF0000);
+        }
+
         bm.x = -16;
         bm.y = -16;
         this.addChild(bm);
