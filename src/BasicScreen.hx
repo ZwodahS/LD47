@@ -7,6 +7,7 @@ import common.HtmlUtils as HU;
 import common.Point2f;
 import common.animations.*;
 import common.ui.TileButton;
+import common.ProbabilityTable;
 
 class BasicScreen extends common.Screen {
     static var ButtonWidth: Int = 0;
@@ -28,6 +29,7 @@ class BasicScreen extends common.Screen {
     var spawnDelay: Float = 0;
     var spawnElapsed: Float = 0;
     var currentRound: Int = 0;
+    var enemyTable: ProbabilityTable<String>;
 
     public function new() {
         super();
@@ -49,6 +51,10 @@ class BasicScreen extends common.Screen {
             startNewGame();
         }
         this.retryButton.visible = false;
+
+        this.enemyTable = new ProbabilityTable<String>();
+        this.enemyTable.add(120, "cannon");
+        this.enemyTable.add(60, "minishooter");
     }
 
     function makeButton(label: String): TileButton {
@@ -72,7 +78,7 @@ class BasicScreen extends common.Screen {
     function addEnemyFadeIn(e: Entity, position: Point2f) {
         e.alpha = 0;
         this.enemies.add(e);
-        this.animator.runAnim(new AlphaTo(new WrappedObject(e), 1.0, 1.0 / 2), function() {
+        this.animator.runAnim(new AlphaTo(new WrappedObject(e), 1.0, 1.0), function() {
             e.isActive = true;
         });
     }
@@ -279,8 +285,8 @@ class BasicScreen extends common.Screen {
     }
 
     function startRound(round: Int) {
-        this.enemyLeft = 5 + round * 3;
-        this.spawnDelay = MU.clampF(1.5 - (.1 * round), 0.2, null);
+        this.enemyLeft = 5 + round;
+        this.spawnDelay = MU.clampF(2.1 - (.1 * round), 0.5, null);
         this.spawnElapsed = 0;
         var font = Assets.fontMontserrat32.toFont();
         var text = new h2d.Text(font);
@@ -309,17 +315,23 @@ class BasicScreen extends common.Screen {
 
     function addRandomEnemy() {
         var e = new Entity(this, [0, 0], 30);
-        var bm = Assets.packedAssets['enemy'].getBitmap();
+        var enemyType = this.enemyTable.roll();
+        var bm = Assets.packedAssets['enemy_${enemyType}'].getBitmap();
         bm.color.setColor(0xFF000000 | Constants.EnemyColor);
         bm.x = -16;
         bm.y = -16;
         e.addChild(bm);
-        e.size = 16;
         e.side = 1;
 
         e.isActive = false;
         e.ai = new EnemyAI(this);
-        e.weapon = new Weapon(2, .5, .1, 300);
+        if (enemyType == "minishooter") {
+            e.weapon = new Weapon(2, 1, .1, 300);
+            e.size = 16;
+        } else { // default to cannon
+            e.weapon = new Weapon(1, 1, .1, 100);
+            e.size = 24;
+        }
         var targetPosition = randomEnemyPosition();
         e.center = targetPosition;
         if (Random.int(0, 0) == 0) {

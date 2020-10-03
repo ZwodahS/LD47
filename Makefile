@@ -36,7 +36,7 @@ itch:
 	cd build/js; zip ../../itch.zip *
 
 push:
-	butler push itch.zip zwodahs/ld47:web --userversion-file VERSION
+	butler push itch.zip zwodahs/ld47-loop-invader:web --userversion-file VERSION
 
 clean:
 	rm -f ./game

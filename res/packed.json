@@ -23,7 +23,7 @@
       "duration": 100
     },
     {
-      "filename": "enemy0",
+      "filename": "enemy_minishooter0",
       "frame": {
         "x": 320,
         "y": 0,
@@ -45,7 +45,7 @@
       "duration": 100
     },
     {
-      "filename": "bullet0",
+      "filename": "enemy_cannon0",
       "frame": {
         "x": 352,
         "y": 0,
@@ -67,9 +67,31 @@
       "duration": 100
     },
     {
-      "filename": "tile0",
+      "filename": "bullet0",
       "frame": {
         "x": 384,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 1024,
+        "h": 1024
+      },
+      "duration": 100
+    },
+    {
+      "filename": "tile0",
+      "frame": {
+        "x": 416,
         "y": 0,
         "w": 32,
         "h": 32
@@ -149,33 +171,39 @@
         "direction": "forward"
       },
       {
-        "name": "enemy",
+        "name": "enemy_minishooter",
         "from": 1,
         "to": 1,
         "direction": "forward"
       },
       {
-        "name": "bullet",
+        "name": "enemy_cannon",
         "from": 2,
         "to": 2,
         "direction": "forward"
       },
       {
-        "name": "tile",
+        "name": "bullet",
         "from": 3,
         "to": 3,
         "direction": "forward"
       },
       {
-        "name": "button_default",
+        "name": "tile",
         "from": 4,
         "to": 4,
         "direction": "forward"
       },
       {
-        "name": "button_hover",
+        "name": "button_default",
         "from": 5,
         "to": 5,
+        "direction": "forward"
+      },
+      {
+        "name": "button_hover",
+        "from": 6,
+        "to": 6,
         "direction": "forward"
       }
     ]
