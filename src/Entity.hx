@@ -23,6 +23,7 @@ class Entity extends h2d.Object {
 
     public var size: Float;
     public var side: Int;
+    public var isActive: Bool;
 
     public function new(parent: h2d.Object, center: Point2f, radius: Float) {
         super(parent);

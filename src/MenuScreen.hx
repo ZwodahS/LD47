@@ -23,7 +23,7 @@ class MenuScreen extends common.Screen {
         b.x = AU.center(0, Globals.gameWidth, ButtonWidth);
         b.y = 200;
         this.addChild(b);
-        b.onClick = function (){
+        b.onClick = function() {
             this.game.switchScreen(new BasicScreen());
         }
     }

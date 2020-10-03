@@ -8,6 +8,8 @@ class Bullet extends h2d.Object {
 
     public var side: Int; // 0 for player, 1 for enemy
 
+    public var collide: Bool = false;
+
     public function new(moveSpeed: Float, side: Int) {
         super();
         var bm = Assets.packedAssets['bullet'].getBitmap();
