@@ -1,0 +1,3 @@
+--hl build/hl/game.hl
+--library hlsdl
+-D windowSize=800x600

@@ -1,0 +1,102 @@
+{
+    "graphics": {
+        "tile": {
+            "rect": {
+                "width": 32,
+                "height": 32,
+                "color": [255, 0, 0, 255]
+            }
+        },
+        "character": {
+            "image": {
+                "src": "font32",
+                "key": "@",
+                "color": [255, 255, 255, 255]
+            }
+        },
+        "wall": {
+            "image": {
+                "src": "font32",
+                "key": "#",
+                "color": [255, 255, 255, 255]
+            }
+        },
+        "numbers": {
+            "images": {
+                "src": "font32",
+                "images": [
+                    { "key": "0" },
+                    { "key": "1" },
+                    { "key": "2" },
+                    { "key": "3" },
+                    { "key": "4" },
+                    { "key": "5" },
+                    { "key": "6" },
+                    { "key": "7" },
+                    { "key": "8" },
+                    { "key": "9" }
+                ]
+            }
+        },
+        "numbers2": {
+            "anim": {
+                "loop": false,
+                "speed": 3,
+                "src": "font32",
+                "frames": [
+                    { "key": "0" },
+                    { "key": "1" },
+                    { "key": "2" },
+                    { "key": "3" },
+                    { "key": "4" },
+                    { "key": "5" },
+                    { "key": "6" },
+                    { "key": "7" },
+                    { "key": "8" },
+                    { "key": "9" }
+                ]
+            }
+        }
+    },
+    "objects": {
+        "hero": {
+            "src": "font32",
+            "states": {
+                "attack": {
+                    "image": {
+                        "src": "font32",
+                        "key": "U"
+                    }
+                },
+                "jump": {
+                    "anim": {
+                        "loop": false,
+                        "speed": 0.5,
+                        "frames": [
+                            {"key": "j"},
+                            {"key": "J"}
+                        ]
+                    }
+                },
+                "idle": {
+                    "anim": {
+                        "loop": true,
+                        "speed": 2.5,
+                        "frames": [
+                            { "key": "0" },
+                            { "key": "1" },
+                            { "key": "2" },
+                            { "key": "3" },
+                            { "key": "4" },
+                            { "key": "5" },
+                            { "key": "6" },
+                            { "key": "7" },
+                            { "key": "8" },
+                            { "key": "9" }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

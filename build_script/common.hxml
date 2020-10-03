@@ -1,0 +1,7 @@
+--library heaps-dev
+--library hxrandom
+--library domkit
+-D heaps_emit_tile_buffering
+--main Main
+--class-path src
+--class-path lib
