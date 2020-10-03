@@ -6,7 +6,8 @@ import common.Point2f;
 import common.animations.*;
 
 class BasicScreen extends common.Screen {
-    var player: Entity;
+    public var player: Entity;
+
     var controlScheme: Int = 1;
 
     var enemies: List<Entity>;
@@ -40,6 +41,8 @@ class BasicScreen extends common.Screen {
             e.addChild(bm);
             e.size = 16;
             e.side = 1;
+            e.ai = new EnemyAI(this);
+            e.weapon = new Weapon(5, .5, .1, 300);
             this.enemies.add(e);
         }
     }
@@ -50,8 +53,7 @@ class BasicScreen extends common.Screen {
         checkFire(dt);
         var w = hxd.Window.getInstance();
         var pos: Point2f = [w.mouseX, w.mouseY];
-        var diff = pos - [this.player.x, this.player.y];
-        this.player.rotation = Math.atan2(diff.y, diff.x);
+        this.player.face(pos);
         for (b in this.bullets) b.update(dt);
         this.player.update(dt);
         for (e in this.enemies) e.update(dt);
@@ -89,11 +91,12 @@ class BasicScreen extends common.Screen {
                 explode(e);
             }
         }
-        this.enemies.inFilter(function(e: Entity) { return e.hp > 0; });
+        this.enemies.inFilter(function(e: Entity) {
+            return e.hp > 0;
+        });
     }
 
-    function playerDead() {
-    }
+    function playerDead() {}
 
     function damage(e: Entity) {
         e.hp -= 1;
@@ -168,7 +171,7 @@ class BasicScreen extends common.Screen {
         }
     }
 
-    function fire(entity: Entity, position: Point2f) {
+    public function fire(entity: Entity, position: Point2f) {
         if (entity.weapon == null) return;
         var startPosition: Point2f = [entity.x, entity.y];
         var bullet = new Bullet(entity.weapon.bulletSpeed, entity == this.player ? 0 : 1);

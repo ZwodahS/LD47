@@ -5,6 +5,7 @@ class Bullet extends h2d.Object {
     var moveSpeed: Float = 100;
 
     var moveVec: Point2f;
+
     public var side: Int; // 0 for player, 1 for enemy
 
     public function new(moveSpeed: Float, side: Int) {

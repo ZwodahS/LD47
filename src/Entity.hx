@@ -96,4 +96,9 @@ class Entity extends h2d.Object {
         this.circle.remove();
         this.remove();
     }
+
+    public function face(position: Point2f) {
+        var diff = position - [this.x, this.y];
+        this.rotation = Math.atan2(diff.y, diff.x);
+    }
 }
