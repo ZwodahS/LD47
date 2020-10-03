@@ -67,7 +67,7 @@
       "duration": 100
     },
     {
-      "filename": "bullet0",
+      "filename": "enemy_bomb0",
       "frame": {
         "x": 384,
         "y": 0,
@@ -89,9 +89,53 @@
       "duration": 100
     },
     {
-      "filename": "tile0",
+      "filename": "enemy_machinegun0",
       "frame": {
         "x": 416,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 1024,
+        "h": 1024
+      },
+      "duration": 100
+    },
+    {
+      "filename": "bullet0",
+      "frame": {
+        "x": 448,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 1024,
+        "h": 1024
+      },
+      "duration": 100
+    },
+    {
+      "filename": "tile0",
+      "frame": {
+        "x": 480,
         "y": 0,
         "w": 32,
         "h": 32
@@ -183,27 +227,39 @@
         "direction": "forward"
       },
       {
-        "name": "bullet",
+        "name": "enemy_bomb",
         "from": 3,
         "to": 3,
         "direction": "forward"
       },
       {
-        "name": "tile",
+        "name": "enemy_machinegun",
         "from": 4,
         "to": 4,
         "direction": "forward"
       },
       {
-        "name": "button_default",
+        "name": "bullet",
         "from": 5,
         "to": 5,
         "direction": "forward"
       },
       {
-        "name": "button_hover",
+        "name": "tile",
         "from": 6,
         "to": 6,
+        "direction": "forward"
+      },
+      {
+        "name": "button_default",
+        "from": 7,
+        "to": 7,
+        "direction": "forward"
+      },
+      {
+        "name": "button_hover",
+        "from": 8,
+        "to": 8,
         "direction": "forward"
       }
     ]

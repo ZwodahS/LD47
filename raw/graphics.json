@@ -27,7 +27,7 @@
     "duration": 100
    },
    {
-    "filename": "3",
+    "filename": "enemy_bomb0",
     "frame": { "x": 96, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -36,7 +36,7 @@
     "duration": 100
    },
    {
-    "filename": "4",
+    "filename": "enemy_machinegun0",
     "frame": { "x": 128, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -182,6 +182,8 @@
    { "name": "player", "from": 0, "to": 0, "direction": "forward" },
    { "name": "enemy_minishooter", "from": 1, "to": 1, "direction": "forward" },
    { "name": "enemy_cannon", "from": 2, "to": 2, "direction": "forward" },
+   { "name": "enemy_bomb", "from": 3, "to": 3, "direction": "forward" },
+   { "name": "enemy_machinegun", "from": 4, "to": 4, "direction": "forward" },
    { "name": "bullet", "from": 8, "to": 8, "direction": "forward" },
    { "name": "tile", "from": 9, "to": 9, "direction": "forward" }
   ],

@@ -55,6 +55,7 @@ class BasicScreen extends common.Screen {
         this.enemyTable = new ProbabilityTable<String>();
         this.enemyTable.add(120, "cannon");
         this.enemyTable.add(60, "minishooter");
+        this.enemyTable.add(60, "machinegun");
     }
 
     function makeButton(label: String): TileButton {
@@ -324,13 +325,20 @@ class BasicScreen extends common.Screen {
         e.side = 1;
 
         e.isActive = false;
-        e.ai = new EnemyAI(this);
         if (enemyType == "minishooter") {
             e.weapon = new Weapon(2, 1, .1, 300);
             e.size = 16;
+            e.ai = new EnemyAI(this);
+        } else if (enemyType == "machinegun") {
+            e.weapon = new Weapon(20, 5, .1, 300);
+            e.weapon.currentAmmo = 0;
+            e.weapon.reload();
+            e.size = 24;
+            e.ai = new EnemyAI(this);
         } else { // default to cannon
             e.weapon = new Weapon(1, 1, .1, 100);
             e.size = 24;
+            e.ai = new EnemyAI(this);
         }
         var targetPosition = randomEnemyPosition();
         e.center = targetPosition;
