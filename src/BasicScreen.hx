@@ -341,8 +341,10 @@ class BasicScreen extends common.Screen {
         for (e in this.enemies) e.delete();
         this.enemies = new List<Entity>();
         this.retryButton.visible = false;
+        this.scoreLabel.visible = false;
         this.startRound(1);
         this.kills = 0;
+        this.setPlayerHealth(5);
 
         this.state = "ready";
     }
