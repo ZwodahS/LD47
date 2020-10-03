@@ -30,8 +30,13 @@ assets: res/packed.json res/packed.png
 res/packed.json: raw/graphics.png raw/graphics.json
 	./bin/asepritepack.py res/packed.png:res/packed.json raw/graphics.png:raw/graphics.json
 
+deploy: js itch push
+
 itch:
 	cd build/js; zip ../../itch.zip *
+
+push:
+	butler push itch.zip zwodahs/ld47:web --userversion-file VERSION
 
 clean:
 	rm -f ./game
