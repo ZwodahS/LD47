@@ -9,13 +9,12 @@ class BasicScreen extends common.Screen {
     public function new() {
         super();
 
-        var entity = new Entity([Globals.gameWidth / 2, Globals.gameHeight / 2], 100);
+        var entity = new Entity(this, [Globals.gameWidth / 2, Globals.gameHeight / 2], 100);
         var bm = Assets.packedAssets['player'].getBitmap();
         bm.x = -16;
         bm.y = -16;
         entity.addChild(bm);
         this.player = entity;
-        this.addChild(this.player);
     }
 
     override public function update(dt: Float) {

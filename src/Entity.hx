@@ -5,13 +5,17 @@ class Entity extends h2d.Object {
     var center: Point2f;
     var radius: Float;
 
+    var circle: h2d.Graphics;
+
     public var position(default, set): Float; // between 0 and 2 PI (without the PI)
 
-    public function new(center: Point2f, radius: Float) {
-        super();
+    public function new(parent: h2d.Object, center: Point2f, radius: Float) {
+        super(parent);
         this.center = center;
         this.radius = radius;
         this.position = 0;
+        this.circle = new h2d.Graphics(parent);
+        updateCircle();
     }
 
     public function set_position(f: Float): Float {
@@ -57,5 +61,14 @@ class Entity extends h2d.Object {
         // distance from current position
         var moveAmount = MU.clampF(speed, 0, Math.abs(normalised));
         this.position += direction * moveAmount;
+    }
+
+    function updateCircle() {
+        if (this.circle == null) return;
+        this.circle.clear();
+        this.circle.beginFill(0x000000, 0);
+        this.circle.lineStyle(2, 0xAAAAAA, 0.25);
+        this.circle.drawCircle(this.center.x, this.center.y, this.radius);
+        this.circle.endFill();
     }
 }
