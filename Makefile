@@ -27,8 +27,8 @@ c: assets
 
 assets: res/packed.json res/packed.png
 
-res/packed.json: raw/graphics.png raw/graphics.json
-	./bin/asepritepack.py res/packed.png:res/packed.json raw/graphics.png:raw/graphics.json
+res/packed.json: raw/graphics.png raw/graphics.json raw/ui.png raw/ui.json
+	./bin/asepritepack.py res/packed.png:res/packed.json raw/graphics.png:raw/graphics.json raw/ui.png:raw/ui.json
 
 deploy: js itch push
 

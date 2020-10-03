@@ -10,6 +10,10 @@ class Game extends common.Game {
         Assets.packedAssets = p.assets;
         Assets.packedTile = p.tile;
 
-        this.switchScreen(new BasicScreen());
+        Assets.fontMontserrat32 = hxd.Res.load('montserrat_regular_32.fnt').to(hxd.res.BitmapFont);
+        Assets.buttonFont = Assets.fontMontserrat32.toFont().clone();
+        Assets.buttonFont.resizeTo(16);
+
+        this.switchScreen(new MenuScreen());
     }
 }
