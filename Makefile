@@ -25,8 +25,10 @@ gcc: c
 c: assets
 	haxe build_script/common.hxml build_script/c.hxml
 
-assets:
-	cp ./raw/*.png ./res/.
+assets: res/packed.json res/packed.png
+
+res/packed.json: raw/graphics.png raw/graphics.json
+	./bin/asepritepack.py res/packed.png:res/packed.json raw/graphics.png:raw/graphics.json
 
 itch:
 	cd build/js; zip ../../itch.zip *
