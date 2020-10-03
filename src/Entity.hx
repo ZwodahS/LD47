@@ -2,7 +2,19 @@ import common.MathUtils as MU;
 import common.Point2f;
 
 class Entity extends h2d.Object {
-    var center: Point2f;
+    public var center(default, set): Point2f;
+
+    public function set_center(c: Point2f): Point2f {
+        if (this.center == null) {
+            this.center = c.copy();
+        } else {
+            this.center.update(c);
+        }
+        updatePosition();
+        updateCircle();
+        return this.center;
+    }
+
     var radius: Float;
 
     var circle: h2d.Graphics;
@@ -39,13 +51,17 @@ class Entity extends h2d.Object {
         if (f < 0 || f > 2) f = f % 2.0;
         if (f < 0) f += 2;
         this.position = f;
+        updatePosition();
+        return this.position;
+    }
+
+    function updatePosition() {
         var p: Point2f = [
-            (Math.cos(f * Math.PI) * this.radius) + center.x,
-            (Math.sin(f * Math.PI) * this.radius) + center.y,
+            (Math.cos(this.position * Math.PI) * this.radius) + center.x,
+            (Math.sin(this.position * Math.PI) * this.radius) + center.y,
         ];
         this.x = p.x;
         this.y = p.y;
-        return this.position;
     }
 
     public function moveTowards(p: Float, speed: Float) {

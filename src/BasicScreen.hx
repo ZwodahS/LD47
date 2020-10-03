@@ -22,11 +22,21 @@ class BasicScreen extends common.Screen {
     public var animator: common.animations.Animator;
 
     var retryButton: TileButton;
+    var playerRect: common.Rectf;
+
+    var enemyLeft: Int = 0;
+    var spawnDelay: Float = 0;
+    var spawnElapsed: Float = 0;
+    var currentRound: Int = 0;
 
     public function new() {
         super();
         var t = Assets.packedAssets['button_default'].getTile();
         ButtonWidth = Std.int(t.width);
+        this.playerRect = [
+            Globals.gameWidth / 2 - 200, Globals.gameHeight / 2 - 200,
+            Globals.gameWidth / 2 + 200, Globals.gameHeight / 2 + 200
+        ];
 
         this.enemies = new List<Entity>();
         this.bullets = new List<Bullet>();
@@ -59,18 +69,7 @@ class BasicScreen extends common.Screen {
         return b;
     }
 
-    function addEnemy(position: Point2f) {
-        var e = new Entity(this, position, 30);
-        var bm = Assets.packedAssets['enemy'].getBitmap();
-        bm.color.setColor(0xFF000000 | Constants.EnemyColor);
-        bm.x = -16;
-        bm.y = -16;
-        e.addChild(bm);
-        e.size = 16;
-        e.side = 1;
-        e.isActive = false;
-        e.ai = new EnemyAI(this);
-        e.weapon = new Weapon(5, .5, .1, 300);
+    function addEnemyFadeIn(e: Entity, position: Point2f) {
         e.alpha = 0;
         this.enemies.add(e);
         this.animator.runAnim(new AlphaTo(new WrappedObject(e), 1.0, 1.0 / 2), function() {
@@ -85,9 +84,23 @@ class BasicScreen extends common.Screen {
         if (this.player != null) this.player.update(dt);
         for (b in this.bullets) b.update(dt);
         for (e in this.enemies) e.update(dt);
+        spawnEnemy(dt);
 
         testCollision();
         cleanup();
+        if (this.enemyLeft == 0 && this.enemies.length == 0 && this.player != null) {
+            startRound(this.currentRound + 1);
+        }
+    }
+
+    function spawnEnemy(dt: Float) {
+        if (this.enemyLeft <= 0) return;
+        this.spawnElapsed += dt;
+        if (this.spawnElapsed > spawnDelay) {
+            this.spawnElapsed -= spawnDelay;
+            addRandomEnemy();
+            this.enemyLeft -= 1;
+        }
     }
 
     override public function render(engine: h3d.Engine) {}
@@ -145,7 +158,7 @@ class BasicScreen extends common.Screen {
 
     function playerDead() {
         explode(this.player);
-        this.player.remove();
+        this.player.delete();
         this.player = null;
         gameOver();
     }
@@ -162,6 +175,7 @@ class BasicScreen extends common.Screen {
         if (e == this.player) {
             e.invincibleDelay = 2.0;
             this.animator.runAnim(new Blink(new WrappedObject(e), 2, .1));
+            this.animator.runAnim(new Shake(new WrappedObject(this), 10, .5));
         } else {}
     }
 
@@ -256,12 +270,28 @@ class BasicScreen extends common.Screen {
         }
         for (b in this.bullets) b.remove();
         this.bullets = new List<Bullet>();
-        for (e in this.enemies) e.remove();
+        for (e in this.enemies) e.delete();
         this.enemies = new List<Entity>();
         this.retryButton.visible = false;
+        this.startRound(1);
 
         this.state = "ready";
-        this.addEnemy([100, 100]);
+    }
+
+    function startRound(round: Int) {
+        this.enemyLeft = 5 + round * 3;
+        this.spawnDelay = MU.clampF(1.5 - (.1 * round), 0.2, null);
+        this.spawnElapsed = 0;
+        var font = Assets.fontMontserrat32.toFont();
+        var text = new h2d.Text(font);
+        text.text = 'ROUND ${round}';
+        text.x = AU.center(0, Globals.gameWidth, text.textWidth);
+        text.y = 180;
+        this.addChild(text);
+        this.animator.runAnim(new AlphaTo(new WrappedObject(text), 0, 1.0 / 1.5), function() {
+            text.remove();
+        });
+        this.currentRound = round;
     }
 
     function makePlayer() {
@@ -270,11 +300,46 @@ class BasicScreen extends common.Screen {
         bm.x = -16;
         bm.y = -16;
         entity.addChild(bm);
-        entity.size = 16;
+        entity.size = 20;
         entity.side = 0;
         entity.weapon = new Weapon(1, .1, .1, 300);
         entity.hp = 5;
         return entity;
+    }
+
+    function addRandomEnemy() {
+        var e = new Entity(this, [0, 0], 30);
+        var bm = Assets.packedAssets['enemy'].getBitmap();
+        bm.color.setColor(0xFF000000 | Constants.EnemyColor);
+        bm.x = -16;
+        bm.y = -16;
+        e.addChild(bm);
+        e.size = 16;
+        e.side = 1;
+
+        e.isActive = false;
+        e.ai = new EnemyAI(this);
+        e.weapon = new Weapon(2, .5, .1, 300);
+        var targetPosition = randomEnemyPosition();
+        e.center = targetPosition;
+        if (Random.int(0, 0) == 0) {
+            addEnemyFadeIn(e, targetPosition);
+        }
+
+        return e;
+    }
+
+    function randomEnemyPosition(): Point2f {
+        var position: Point2f = [Random.int(50,
+            Globals.gameWidth - 50), Random.int(50, Globals.gameHeight - 50)];
+        while (this.playerRect.contains(position)) {
+            if (Random.int(0, 2) == 0) {
+                position.x = Random.int(50, Globals.gameWidth - 50);
+            } else {
+                position.y = Random.int(50, Globals.gameHeight - 50);
+            }
+        }
+        return position;
     }
 
     override public function beginScreenEnter() {
