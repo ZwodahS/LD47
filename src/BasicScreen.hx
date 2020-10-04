@@ -420,7 +420,8 @@ class BasicScreen extends common.Screen {
     }
 
     function addRandomEnemy() {
-        var e = new Entity(this, [0, 0], 30);
+        var radius = Random.int(20, 50);
+        var e = new Entity(this, [0, 0], radius);
         var enemyType = this.enemyTable.roll();
         var bm = Assets.packedAssets['enemy_${enemyType}'].getBitmap();
         bm.color.setColor(0xFF000000 | Constants.EnemyColor);
