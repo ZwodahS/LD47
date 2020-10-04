@@ -27,26 +27,26 @@
     "duration": 100
    },
    {
-    "filename": "3",
-    "frame": { "x": 292, "y": 0, "w": 1, "h": 1 },
+    "filename": "control10",
+    "frame": { "x": 292, "y": 0, "w": 112, "h": 64 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 1, "h": 1 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 112, "h": 64 },
     "sourceSize": { "w": 256, "h": 256 },
     "duration": 100
    },
    {
-    "filename": "4",
-    "frame": { "x": 293, "y": 0, "w": 1, "h": 1 },
+    "filename": "control20",
+    "frame": { "x": 404, "y": 0, "w": 112, "h": 64 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 1, "h": 1 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 112, "h": 64 },
     "sourceSize": { "w": 256, "h": 256 },
     "duration": 100
    },
    {
     "filename": "5",
-    "frame": { "x": 294, "y": 0, "w": 1, "h": 1 },
+    "frame": { "x": 516, "y": 0, "w": 1, "h": 1 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 1, "h": 1 },
@@ -59,12 +59,14 @@
   "version": "1.2.24",
   "image": "ui.png",
   "format": "RGBA8888",
-  "size": { "w": 295, "h": 48 },
+  "size": { "w": 517, "h": 64 },
   "scale": "1",
   "frameTags": [
    { "name": "button_default", "from": 0, "to": 0, "direction": "forward" },
    { "name": "button_hover", "from": 1, "to": 1, "direction": "forward" },
-   { "name": "bullet_icon", "from": 2, "to": 2, "direction": "forward" }
+   { "name": "bullet_icon", "from": 2, "to": 2, "direction": "forward" },
+   { "name": "control1", "from": 3, "to": 3, "direction": "forward" },
+   { "name": "control2", "from": 4, "to": 4, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }

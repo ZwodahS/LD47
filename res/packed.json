@@ -3,7 +3,7 @@
     {
       "filename": "player0",
       "frame": {
-        "x": 288,
+        "x": 512,
         "y": 0,
         "w": 32,
         "h": 32
@@ -25,7 +25,7 @@
     {
       "filename": "enemy_minishooter0",
       "frame": {
-        "x": 320,
+        "x": 544,
         "y": 0,
         "w": 32,
         "h": 32
@@ -47,7 +47,7 @@
     {
       "filename": "enemy_cannon0",
       "frame": {
-        "x": 352,
+        "x": 576,
         "y": 0,
         "w": 32,
         "h": 32
@@ -69,7 +69,7 @@
     {
       "filename": "enemy_bomb0",
       "frame": {
-        "x": 384,
+        "x": 608,
         "y": 0,
         "w": 32,
         "h": 32
@@ -91,7 +91,7 @@
     {
       "filename": "enemy_machinegun0",
       "frame": {
-        "x": 416,
+        "x": 640,
         "y": 0,
         "w": 32,
         "h": 32
@@ -113,7 +113,7 @@
     {
       "filename": "bullet0",
       "frame": {
-        "x": 448,
+        "x": 672,
         "y": 0,
         "w": 32,
         "h": 32
@@ -135,7 +135,7 @@
     {
       "filename": "tile0",
       "frame": {
-        "x": 480,
+        "x": 704,
         "y": 0,
         "w": 32,
         "h": 32
@@ -157,7 +157,7 @@
     {
       "filename": "heart_filled0",
       "frame": {
-        "x": 512,
+        "x": 736,
         "y": 0,
         "w": 32,
         "h": 32
@@ -179,7 +179,7 @@
     {
       "filename": "heart_empty0",
       "frame": {
-        "x": 544,
+        "x": 768,
         "y": 0,
         "w": 32,
         "h": 32
@@ -201,7 +201,7 @@
     {
       "filename": "button_default0",
       "frame": {
-        "x": 0,
+        "x": 224,
         "y": 0,
         "w": 144,
         "h": 48
@@ -223,7 +223,7 @@
     {
       "filename": "button_hover0",
       "frame": {
-        "x": 144,
+        "x": 368,
         "y": 0,
         "w": 144,
         "h": 48
@@ -245,7 +245,7 @@
     {
       "filename": "bullet_icon0",
       "frame": {
-        "x": 576,
+        "x": 800,
         "y": 0,
         "w": 4,
         "h": 9
@@ -257,6 +257,50 @@
         "y": 0,
         "w": 4,
         "h": 9
+      },
+      "sourceSize": {
+        "w": 1024,
+        "h": 1024
+      },
+      "duration": 100
+    },
+    {
+      "filename": "control10",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 1024,
+        "h": 1024
+      },
+      "duration": 100
+    },
+    {
+      "filename": "control20",
+      "frame": {
+        "x": 112,
+        "y": 0,
+        "w": 112,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 64
       },
       "sourceSize": {
         "w": 1024,
@@ -344,6 +388,18 @@
         "name": "bullet_icon",
         "from": 11,
         "to": 11,
+        "direction": "forward"
+      },
+      {
+        "name": "control1",
+        "from": 12,
+        "to": 12,
+        "direction": "forward"
+      },
+      {
+        "name": "control2",
+        "from": 13,
+        "to": 13,
         "direction": "forward"
       }
     ]

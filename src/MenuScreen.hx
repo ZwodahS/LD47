@@ -5,6 +5,10 @@ import common.ui.TileButton;
 class MenuScreen extends common.Screen {
     static var ButtonWidth: Int = 0;
 
+    var c1: h2d.Bitmap;
+    var c2: h2d.Bitmap;
+    var control: Int = 1;
+
     public function new() {
         super();
         var t = Assets.packedAssets['button_default'].getTile();
@@ -24,7 +28,7 @@ class MenuScreen extends common.Screen {
         b.y = 250;
         this.addChild(b);
         b.onClick = function() {
-            this.game.switchScreen(new BasicScreen());
+            startGame();
         }
 
         var font = Assets.fontMontserrat32.toFont();
@@ -33,6 +37,54 @@ class MenuScreen extends common.Screen {
         text.x = AU.center(0, Globals.gameWidth, text.textWidth);
         text.y = 180;
         this.addChild(text);
+
+        font = Assets.fontMontserrat12.toFont().clone();
+        text = new h2d.Text(font);
+        text.text = 'CONTROL SCHEME';
+        text.x = AU.center(0, Globals.gameWidth, text.textWidth);
+        text.y = 320;
+        this.addChild(text);
+
+        this.c1 = Assets.packedAssets['control1'].getBitmap();
+        c1.y = text.y + text.textHeight + 5;
+        c1.x = Globals.gameWidth / 2 - 120;
+        c1.color.setColor(0xFF63ab3f);
+        this.addChild(c1);
+        var interactive = new h2d.Interactive(112, 64, this.c1);
+        interactive.cursor = Default;
+        interactive.onOver = function(e: hxd.Event) {
+            c1.color.setColor(0xFF63ab3f);
+        }
+        interactive.onOut = function(e: hxd.Event) {
+            if (this.control == 2) {
+                c1.color.setColor(0xFFFFFFFF);
+            }
+        }
+        interactive.onClick = function(e: hxd.Event) {
+            this.control = 1;
+            c1.color.setColor(0xFF63ab3f);
+            c2.color.setColor(0xFFFFFFFF);
+        }
+
+        this.c2 = Assets.packedAssets['control2'].getBitmap();
+        c2.y = c1.y;
+        c2.x = Globals.gameWidth / 2 + 8;
+        this.addChild(c2);
+        var interactive = new h2d.Interactive(112, 64, this.c2);
+        interactive.cursor = Default;
+        interactive.onOver = function(e: hxd.Event) {
+            c2.color.setColor(0xFF63ab3f);
+        }
+        interactive.onOut = function(e: hxd.Event) {
+            if (this.control == 1) {
+                c2.color.setColor(0xFFFFFFFF);
+            }
+        }
+        interactive.onClick = function(e: hxd.Event) {
+            this.control = 2;
+            c1.color.setColor(0xFFFFFFFF);
+            c2.color.setColor(0xFF63ab3f);
+        }
     }
 
     override public function update(dt: Float) {}
@@ -42,4 +94,8 @@ class MenuScreen extends common.Screen {
     override public function onEvent(event: hxd.Event) {}
 
     override public function destroy() {}
+
+    function startGame() {
+        this.game.switchScreen(new BasicScreen(this.control));
+    }
 }

@@ -57,8 +57,9 @@ class BasicScreen extends common.Screen {
     var reloadingLabel: h2d.Text;
     var killLabel: h2d.Text;
 
-    public function new() {
+    public function new(control: Int = 1) {
         super();
+        this.controlScheme = control;
         var t = Assets.packedAssets['button_default'].getTile();
         ButtonWidth = Std.int(t.width);
         this.playerRect = [
