@@ -279,22 +279,22 @@ class BasicScreen extends common.Screen {
     function damage(e: Entity) {
         if (e.invincibleDelay > 0) return;
         e.hp -= 1;
+        if (e == this.player) this.setPlayerHealth(e.hp);
         if (e.hp <= 0) return;
         if (e == this.player) {
             e.invincibleDelay = 2.0;
             this.animator.runAnim(new Blink(new WrappedObject(e), 2, .1));
             this.animator.runAnim(new Shake(new WrappedObject(this), 10, .5));
-            this.setPlayerHealth(e.hp);
         } else {}
     }
 
     function explode(e: Entity) {
-        for (i in 0...4) {
+        for (i in 0...2) {
             var t = Assets.packedAssets['tile'].getBitmap();
             t.x = e.x - 16;
             t.y = e.y - 16;
             t.color.setColor(0xFF000000 | Constants.EnemyColor);
-            var e = new Explode(t, 32, 1.5, 128);
+            var e = new Explode(t, 32, 6, 128);
             this.add(t, 10);
             this.animator.run(e);
         }
