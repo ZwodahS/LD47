@@ -155,14 +155,6 @@ class BasicScreen extends common.Screen {
         return b;
     }
 
-    function addEnemyFadeIn(e: Entity, position: Point2f) {
-        e.alpha = 0;
-        this.enemies.add(e);
-        this.animator.runAnim(new AlphaTo(new WrappedObject(e), 1.0, 1.0), function() {
-            e.isActive = true;
-        });
-    }
-
     override public function update(dt: Float) {
         this.animator.update(dt);
         movePlayerPosition(dt);
@@ -248,7 +240,7 @@ class BasicScreen extends common.Screen {
             }
         }
         for (b in this.bullets) {
-            if (b.x < 0 || b.y < 0 || b.x > Globals.gameWidth || b.y > Globals.gameHeight) {
+            if (b.x < -300 || b.y < -300 || b.x > Globals.gameWidth + 300 || b.y > Globals.gameHeight + 300) {
                 b.collide = true;
             }
             if (b.collide) b.remove();
@@ -434,25 +426,55 @@ class BasicScreen extends common.Screen {
         if (enemyType == "minishooter") {
             e.weapon = new Weapon(2, 1, .1, 300);
             e.size = 16;
-            e.ai = new EnemyAI(this);
+            e.ai = new EnemyAI(this, e);
         } else if (enemyType == "machinegun") {
             e.weapon = new Weapon(20, 5, .1, 300);
             e.weapon.currentAmmo = 0;
             e.weapon.reload();
             e.size = 24;
-            e.ai = new EnemyAI(this);
+            e.ai = new EnemyAI(this, e);
         } else { // default to cannon
             e.weapon = new Weapon(1, 1, .1, 100);
             e.size = 24;
-            e.ai = new EnemyAI(this);
+            e.ai = new EnemyAI(this, e);
         }
         var targetPosition = randomEnemyPosition();
         e.center = targetPosition;
-        if (Random.int(0, 0) == 0) {
+        var r = Random.int(0, 1);
+        if (r == 0) {
             addEnemyFadeIn(e, targetPosition);
+        } else {
+            addEnemyMoveIn(e, targetPosition);
         }
 
         return e;
+    }
+
+    function addEnemyFadeIn(e: Entity, position: Point2f) {
+        e.alpha = 0;
+        this.enemies.add(e);
+        this.animator.runAnim(new AlphaTo(new WrappedObject(e), 1.0, 1.0), function() {
+            e.isActive = true;
+        });
+    }
+
+    function addEnemyMoveIn(e: Entity, position: Point2f) {
+        if (Random.int(0, 1) == 0) {
+            if (position.x < Globals.gameWidth / 2) {
+                e.center = [-e.radius / 2, position.y];
+            } else {
+                e.center = [Globals.gameWidth + e.radius / 2, position.y];
+            }
+        } else {
+            if (position.y < Globals.gameHeight / 2) {
+                e.center = [position.x, -e.radius / 2];
+            } else {
+                e.center = [position.x, Globals.gameHeight + e.radius / 2];
+            }
+        }
+        this.enemies.add(e);
+        e.isActive = true;
+        this.animator.runAnim(new MoveToLocationByDuration(e.ai, position, 6));
     }
 
     function randomEnemyPosition(): Point2f {

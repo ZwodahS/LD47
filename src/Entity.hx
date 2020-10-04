@@ -15,7 +15,7 @@ class Entity extends h2d.Object {
         return this.center;
     }
 
-    var radius: Float;
+    public var radius: Float;
 
     var circle: h2d.Graphics;
 
@@ -107,7 +107,7 @@ class Entity extends h2d.Object {
 
     public function update(dt: Float) {
         if (this.weapon != null) this.weapon.update(dt);
-        if (this.ai != null) this.ai.update(dt, this);
+        if (this.ai != null) this.ai.update(dt);
         if (this.invincibleDelay > 0) this.invincibleDelay -= dt;
     }
 
