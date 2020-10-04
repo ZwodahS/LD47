@@ -17,32 +17,50 @@ class MenuScreen extends common.Screen {
             Assets.packedAssets['button_hover'].getTile(), Assets.packedAssets['button_default'].getTile(),
             Assets.packedAssets['button_default'].getTile());
         b.font = Assets.buttonFont;
-        b.text = 'New Game';
+        b.text = 'Normal';
         b.onOver = function() {
-            b.text = HU.font('New Game', 0x63ab3f);
+            b.text = HU.font('Normal', 0x63ab3f);
         }
         b.onOut = function() {
-            b.text = HU.font('New Game', 0xFFFFFF);
+            b.text = HU.font('Normal', 0xFFFFFF);
         }
         b.x = AU.center(0, Globals.gameWidth, ButtonWidth);
-        b.y = 250;
+        b.y = 200;
         this.addChild(b);
         b.onClick = function() {
             startGame();
+        }
+
+        var b2 = new TileButton(Assets.packedAssets['button_default'].getTile(),
+            Assets.packedAssets['button_hover'].getTile(), Assets.packedAssets['button_default'].getTile(),
+            Assets.packedAssets['button_default'].getTile());
+        b2.font = Assets.buttonFont;
+        b2.text = HU.font('Hell', Constants.EnemyColor);
+        b2.onOver = function() {
+            b2.text = HU.font('Hell', 0x63ab3f);
+        }
+        b2.onOut = function() {
+            b2.text = HU.font('Hell', Constants.EnemyColor);
+        }
+        b2.x = AU.center(0, Globals.gameWidth, ButtonWidth);
+        b2.y = 270;
+        this.addChild(b2);
+        b2.onClick = function() {
+            startHellGame();
         }
 
         var font = Assets.fontMontserrat32.toFont();
         var text = new h2d.Text(font);
         text.text = 'LOOP INVADERS';
         text.x = AU.center(0, Globals.gameWidth, text.textWidth);
-        text.y = 180;
+        text.y = 100;
         this.addChild(text);
 
         font = Assets.fontMontserrat12.toFont().clone();
         text = new h2d.Text(font);
         text.text = 'CONTROL SCHEME';
         text.x = AU.center(0, Globals.gameWidth, text.textWidth);
-        text.y = 320;
+        text.y = 400;
         this.addChild(text);
 
         this.c1 = Assets.packedAssets['control1'].getBitmap();
@@ -97,5 +115,9 @@ class MenuScreen extends common.Screen {
 
     function startGame() {
         this.game.switchScreen(new BasicScreen(this.control));
+    }
+
+    function startHellGame() {
+        this.game.switchScreen(new BasicScreen(this.control, true));
     }
 }

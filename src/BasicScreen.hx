@@ -33,6 +33,11 @@ class BasicScreen extends common.Screen {
     function set_currentRound(i: Int): Int {
         this.currentRound = i;
         this.roundLabel.text = 'ROUND ${this.currentRound}';
+        this.roundLabel.textColor = 0xFFFFFF;
+        if (this.currentRound >= 10) {
+            this.roundLabel.text = 'HELL';
+            this.roundLabel.textColor = Constants.EnemyColor;
+        }
         this.roundLabel.x = AU.center(0, Globals.gameWidth, this.roundLabel.textWidth);
         this.roundLabel.y = Globals.gameHeight / 2 - 40;
         return this.currentRound;
@@ -57,9 +62,12 @@ class BasicScreen extends common.Screen {
     var reloadingLabel: h2d.Text;
     var killLabel: h2d.Text;
 
-    public function new(control: Int = 1) {
+    var hellmode: Bool = false;
+
+    public function new(control: Int = 1, hellmode: Bool = false) {
         super();
         this.controlScheme = control;
+        this.hellmode = hellmode;
         var t = Assets.packedAssets['button_default'].getTile();
         ButtonWidth = Std.int(t.width);
         this.playerRect = [
@@ -337,9 +345,11 @@ class BasicScreen extends common.Screen {
         } else {
             var aDown = Key.isDown(Key.A);
             var dDown = Key.isDown(Key.D);
-            if (aDown && !dDown) {
+            var wDown = Key.isDown(Key.W);
+            var sDown = Key.isDown(Key.S);
+            if ((aDown && !dDown) || (wDown && !sDown)) {
                 this.player.position -= dt * .5;
-            } else if (dDown && !aDown) {
+            } else if ((dDown && !aDown) || (sDown && !wDown)) {
                 this.player.position += dt * .5;
             }
         }
@@ -382,7 +392,11 @@ class BasicScreen extends common.Screen {
         this.enemies = new List<Entity>();
         this.retryButton.visible = false;
         this.scoreLabel.visible = false;
-        this.startRound(1);
+        if (this.hellmode) {
+            this.startRound(10);
+        } else {
+            this.startRound(1);
+        }
         this.kills = 0;
         this.setPlayerHealth(5);
 
@@ -391,13 +405,21 @@ class BasicScreen extends common.Screen {
 
     function startRound(round: Int) {
         this.currentRound = round;
-        this.enemyLeft = 5;
-        if (this.currentRound >= 5) this.enemyLeft = 10;
+        if (this.currentRound < 5) {
+            this.enemyLeft = 5;
+        } else if (this.currentRound < 10) {
+            this.enemyLeft = 10;
+        } else if (this.currentRound >= 10) {
+            this.enemyLeft = 10000;
+        }
         this.spawnDelay = MU.clampF(2.6 - (.1 * round), 0.5, null);
         this.spawnElapsed = 0;
         var font = Assets.fontMontserrat32.toFont();
         var text = new h2d.Text(font);
         text.text = 'ROUND ${round}';
+        if (this.currentRound >= 10) {
+            text.text = 'HELL MODE';
+        }
         text.x = AU.center(0, Globals.gameWidth, text.textWidth);
         text.y = 180;
         this.addChild(text);
@@ -420,7 +442,6 @@ class BasicScreen extends common.Screen {
     }
 
     function addRandomEnemy() {
-        trace(this.enemyLeft);
         var radius = 30;
         if (this.currentRound <= 3) {
             radius = 30;
