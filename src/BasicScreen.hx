@@ -390,8 +390,10 @@ class BasicScreen extends common.Screen {
     }
 
     function startRound(round: Int) {
-        this.enemyLeft = 5 + round;
-        this.spawnDelay = MU.clampF(2.1 - (.1 * round), 0.5, null);
+        this.currentRound = round;
+        this.enemyLeft = 5;
+        if (this.currentRound >= 5) this.enemyLeft = 10;
+        this.spawnDelay = MU.clampF(2.6 - (.1 * round), 0.5, null);
         this.spawnElapsed = 0;
         var font = Assets.fontMontserrat32.toFont();
         var text = new h2d.Text(font);
@@ -402,7 +404,6 @@ class BasicScreen extends common.Screen {
         this.animator.runAnim(new AlphaTo(new WrappedObject(text), 0, 1.0 / 1.5), function() {
             text.remove();
         });
-        this.currentRound = round;
     }
 
     function makePlayer() {
@@ -419,9 +420,27 @@ class BasicScreen extends common.Screen {
     }
 
     function addRandomEnemy() {
-        var radius = Random.int(20, 50);
+        trace(this.enemyLeft);
+        var radius = 30;
+        if (this.currentRound <= 3) {
+            radius = 30;
+        } else {
+            radius = Random.int(20, 30 + this.currentRound * 10);
+        }
         var e = new Entity(this, [0, 0], radius);
         var enemyType = this.enemyTable.roll();
+        if (this.currentRound == 1) {
+            enemyType = 'cannon';
+        } else if (this.currentRound == 2) {
+            if (this.enemyLeft == 2) {
+                enemyType = 'machinegun';
+            } else if (this.enemyLeft == 3) {
+                enemyType = 'minishooter';
+            } else {
+                enemyType = 'cannon';
+            }
+        }
+
         var bm = Assets.packedAssets['enemy_${enemyType}'].getBitmap();
         bm.color.setColor(0xFF000000 | Constants.EnemyColor);
         bm.x = -16;
@@ -448,7 +467,7 @@ class BasicScreen extends common.Screen {
         var targetPosition = randomEnemyPosition();
         e.center = targetPosition;
         var r = Random.int(0, 1);
-        if (r == 0) {
+        if (r == 0 || this.currentRound <= 4) { // don't move in until after 4
             addEnemyFadeIn(e, targetPosition);
         } else {
             addEnemyMoveIn(e, targetPosition);
