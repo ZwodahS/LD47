@@ -363,17 +363,18 @@ class BasicScreen extends common.Screen {
                 this.player.position += dt * .5;
             }
         }
-        var w = hxd.Window.getInstance();
-        var pos: Point2f = [w.mouseX, w.mouseY];
+        var s2d = this.game.s2d;
+        var pos = [s2d.mouseX, s2d.mouseY];
         this.player.face(pos);
     }
 
     function checkFire(dt: Float) {
         if (this.state != "ready") return;
         if (Key.isDown(Key.MOUSE_LEFT) || Key.isDown(Key.SPACE)) {
-            var w = hxd.Window.getInstance();
+            var s2d = this.game.s2d;
+            var pos: Point2f = [s2d.mouseX, s2d.mouseY];
             if (this.player.canFire) {
-                fire(this.player, [w.mouseX, w.mouseY]);
+                fire(this.player, pos);
             }
         }
     }
