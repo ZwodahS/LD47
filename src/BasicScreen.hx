@@ -483,17 +483,17 @@ class BasicScreen extends common.Screen {
         e.isActive = false;
         if (enemyType == "minishooter") {
             e.weapon = new Weapon(2, 1, .1, 300);
-            e.size = 16;
+            e.size = 20;
             e.ai = new EnemyAI(this, e);
         } else if (enemyType == "machinegun") {
             e.weapon = new Weapon(20, 5, .1, 300);
             e.weapon.currentAmmo = 0;
             e.weapon.reload();
-            e.size = 24;
+            e.size = 28;
             e.ai = new EnemyAI(this, e);
         } else { // default to cannon
             e.weapon = new Weapon(1, 1, .1, 100);
-            e.size = 24;
+            e.size = 28;
             e.ai = new EnemyAI(this, e);
         }
         var targetPosition = randomEnemyPosition();
