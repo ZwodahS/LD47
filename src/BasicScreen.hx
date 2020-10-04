@@ -291,7 +291,7 @@ class BasicScreen extends common.Screen {
         e.hp -= 1;
         if (e == this.player) {
             this.setPlayerHealth(e.hp);
-            if (e.hp != 0 && Assets.damagedSound != null) Assets.damagedSound.play(.5);
+            if (e.hp != 0 && Assets.damagedSound != null) Assets.damagedSound.play(.25);
         }
         if (e.hp <= 0) return;
         if (e == this.player) {
@@ -311,7 +311,7 @@ class BasicScreen extends common.Screen {
             this.add(t, 10);
             this.animator.run(e);
         }
-        if (Assets.explosionSound != null) Assets.explosionSound.play(.5);
+        if (Assets.explosionSound != null) Assets.explosionSound.play(.25);
     }
 
     function movePlayerPosition(dt: Float) {
@@ -382,7 +382,7 @@ class BasicScreen extends common.Screen {
     public function fire(entity: Entity, position: Point2f) {
         if (entity.weapon == null) return;
         if (entity == this.player) {
-            if (Assets.shootSound != null) Assets.shootSound.play(.5);
+            if (Assets.shootSound != null) Assets.shootSound.play(.25);
         }
         var startPosition: Point2f = [entity.x, entity.y];
         var bullet = new Bullet(entity.weapon.bulletSpeed, entity == this.player ? 0 : 1);
