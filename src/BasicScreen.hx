@@ -416,6 +416,7 @@ class BasicScreen extends common.Screen {
     }
 
     function startRound(round: Int) {
+        if (round >= 8) round = 10;
         this.currentRound = round;
         if (this.currentRound < 5) {
             this.enemyLeft = 5;
