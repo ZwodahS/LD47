@@ -51,8 +51,10 @@ class BasicScreen extends common.Screen {
     var enemyTable: ProbabilityTable<String>;
 
     var hearts: Array<Heart>;
+    var bulletIcons: Array<h2d.Bitmap>;
     var roundLabel: h2d.Text;
     var scoreLabel: h2d.Text;
+    var reloadingLabel: h2d.Text;
     var killLabel: h2d.Text;
 
     public function new() {
@@ -66,12 +68,19 @@ class BasicScreen extends common.Screen {
 
         this.addChild(this.roundLabel = new h2d.Text(Assets.buttonFont));
         this.roundLabel.textColor = 0xAAAAAA;
-        this.roundLabel.alpha = 0.25;
+        this.roundLabel.alpha = 0.4;
 
         var font = Assets.fontMontserrat32.toFont().clone();
         this.addChild(this.killLabel = new h2d.Text(font));
         this.killLabel.textColor = 0xAAAAAA;
-        this.killLabel.alpha = 0.25;
+        this.killLabel.alpha = 0.4;
+
+        this.addChild(this.reloadingLabel = new h2d.Text(Assets.fontMontserrat12.toFont().clone()));
+        this.reloadingLabel.textColor = 0xAAAAAA;
+        this.reloadingLabel.alpha = 0.4;
+        this.reloadingLabel.text = 'RELOADING';
+        this.reloadingLabel.x = AU.center(0, Globals.gameWidth, this.reloadingLabel.textWidth);
+        this.reloadingLabel.y = Globals.gameHeight / 2 + 15;
 
         this.enemies = new List<Entity>();
         this.bullets = new List<Bullet>();
@@ -104,6 +113,19 @@ class BasicScreen extends common.Screen {
             h.x = ((Globals.gameWidth - 32) / 2) - (32 * 2) + (i * 32);
             h.y = (Globals.gameHeight - 32) / 2;
             this.addChild(h);
+        }
+
+        this.bulletIcons = [];
+        var totalWidth = 30 * 4 + 29 * 2;
+        var startX = AU.center(0, Globals.gameWidth, totalWidth);
+        for (i in 0...30) {
+            var b = Assets.packedAssets['bullet_icon'].getBitmap();
+            b.x = startX + (i * 6);
+            b.y = Globals.gameHeight / 2 + 20;
+            b.color.setColor(0xFFAAAAAA);
+            b.alpha = .4;
+            this.addChild(b);
+            this.bulletIcons.push(b);
         }
     }
 
@@ -147,12 +169,30 @@ class BasicScreen extends common.Screen {
         if (this.player != null) this.player.update(dt);
         for (b in this.bullets) b.update(dt);
         for (e in this.enemies) e.update(dt);
+        updateBulletUI();
         spawnEnemy(dt);
 
         testCollision();
         cleanup();
         if (this.enemyLeft == 0 && this.enemies.length == 0 && this.player != null) {
             startRound(this.currentRound + 1);
+        }
+    }
+
+    function updateBulletUI() {
+        if (this.player == null) return;
+        var ammoAmount = this.player.weapon.currentAmmo;
+        if (this.player.weapon.reloading > 0) {
+            ammoAmount = 0;
+            this.reloadingLabel.visible = true;
+        } else {
+            this.reloadingLabel.visible = false;
+        }
+        for (i in 0...ammoAmount) {
+            this.bulletIcons[i].visible = true;
+        }
+        for (i in ammoAmount...this.bulletIcons.length) {
+            this.bulletIcons[i].visible = false;
         }
     }
 
@@ -373,7 +413,7 @@ class BasicScreen extends common.Screen {
         entity.addChild(bm);
         entity.size = 20;
         entity.side = 0;
-        entity.weapon = new Weapon(1, .1, .1, 300);
+        entity.weapon = new Weapon(30, 1, .1, 300);
         entity.hp = 5;
         return entity;
     }

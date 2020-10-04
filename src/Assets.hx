@@ -5,6 +5,7 @@ class Assets {
     public static var packedTile: h2d.Tile;
 
     public static var fontMontserrat32: hxd.res.BitmapFont;
+    public static var fontMontserrat12: hxd.res.BitmapFont;
 
     public static var buttonFont: h2d.Font;
 }

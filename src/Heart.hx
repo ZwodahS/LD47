@@ -16,8 +16,8 @@ class Heart extends h2d.Object {
         this.addChild(this.empty = Assets.packedAssets["heart_empty"].getBitmap());
         this.addChild(this.filled = Assets.packedAssets["heart_filled"].getBitmap());
         this.empty.color.setColor(0xFFAAAAAA);
-        this.empty.alpha = 0.25;
+        this.empty.alpha = 0.4;
         this.filled.color.setColor(0xFFAAAAAA);
-        this.filled.alpha = 0.25;
+        this.filled.alpha = 0.4;
     }
 }

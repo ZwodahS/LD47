@@ -14,6 +14,8 @@ class Game extends common.Game {
         Assets.buttonFont = Assets.fontMontserrat32.toFont().clone();
         Assets.buttonFont.resizeTo(16);
 
+        Assets.fontMontserrat12 = hxd.Res.load('montserrat_regular_12.fnt').to(hxd.res.BitmapFont);
+
         this.switchScreen(new MenuScreen());
     }
 }

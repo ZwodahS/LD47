@@ -241,6 +241,28 @@
         "h": 1024
       },
       "duration": 100
+    },
+    {
+      "filename": "bullet_icon0",
+      "frame": {
+        "x": 576,
+        "y": 0,
+        "w": 4,
+        "h": 9
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 4,
+        "h": 9
+      },
+      "sourceSize": {
+        "w": 1024,
+        "h": 1024
+      },
+      "duration": 100
     }
   ],
   "meta": {
@@ -316,6 +338,12 @@
         "name": "button_hover",
         "from": 10,
         "to": 10,
+        "direction": "forward"
+      },
+      {
+        "name": "bullet_icon",
+        "from": 11,
+        "to": 11,
         "direction": "forward"
       }
     ]
