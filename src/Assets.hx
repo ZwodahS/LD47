@@ -8,4 +8,8 @@ class Assets {
     public static var fontMontserrat12: hxd.res.BitmapFont;
 
     public static var buttonFont: h2d.Font;
+
+    public static var explosionSound: hxd.res.Sound;
+    public static var shootSound: hxd.res.Sound;
+    public static var damagedSound: hxd.res.Sound;
 }

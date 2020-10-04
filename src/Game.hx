@@ -16,6 +16,10 @@ class Game extends common.Game {
 
         Assets.fontMontserrat12 = hxd.Res.load('montserrat_regular_12.fnt').to(hxd.res.BitmapFont);
 
+        Assets.explosionSound = hxd.Res.explosion1;
+        Assets.shootSound = hxd.Res.shoot1;
+        Assets.damagedSound = hxd.Res.damaged;
+
         this.switchScreen(new MenuScreen());
     }
 }
