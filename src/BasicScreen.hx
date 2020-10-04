@@ -23,6 +23,7 @@ class BasicScreen extends common.Screen {
     public var animator: common.animations.Animator;
 
     var retryButton: TileButton;
+    var quitButton: TileButton;
     var playerRect: common.Rectf;
 
     var enemyLeft: Int = 0;
@@ -107,8 +108,16 @@ class BasicScreen extends common.Screen {
             startNewGame();
         }
         this.retryButton.visible = false;
-        this.retryButton.x = AU.center(0, Globals.gameWidth, ButtonWidth);
+        this.retryButton.x = AU.center(0, Globals.gameWidth, ButtonWidth) - (ButtonWidth - 20);
         this.retryButton.y = 400;
+
+        this.quitButton = makeButton("Quit");
+        this.quitButton.onClick = function() {
+            backToMenu();
+        }
+        this.quitButton.visible = false;
+        this.quitButton.x = AU.center(0, Globals.gameWidth, ButtonWidth) + (ButtonWidth - 20);
+        this.quitButton.y = 400;
 
         this.enemyTable = new ProbabilityTable<String>();
         this.enemyTable.add(120, "cannon");
@@ -271,6 +280,7 @@ class BasicScreen extends common.Screen {
     function gameOver() {
         this.state = "gameover";
         this.retryButton.visible = true;
+        this.quitButton.visible = true;
         this.scoreLabel.visible = true;
         this.scoreLabel.text = 'Score: ${this.kills}';
         this.scoreLabel.x = AU.center(0, Globals.gameWidth, this.scoreLabel.textWidth);
@@ -391,6 +401,7 @@ class BasicScreen extends common.Screen {
         for (e in this.enemies) e.delete();
         this.enemies = new List<Entity>();
         this.retryButton.visible = false;
+        this.quitButton.visible = false;
         this.scoreLabel.visible = false;
         if (this.hellmode) {
             this.startRound(10);
@@ -539,5 +550,9 @@ class BasicScreen extends common.Screen {
 
     override public function beginScreenEnter() {
         startNewGame();
+    }
+
+    function backToMenu() {
+        this.game.switchScreen(new MenuScreen());
     }
 }
